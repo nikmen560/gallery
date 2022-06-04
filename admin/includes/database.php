@@ -6,24 +6,38 @@ class Database {
 
     public $conn;
 
+
     function __construct()
     {
         $this->open_db_connection();
     }
     public function open_db_connection() {
-        $this->conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if(mysqli_connect_errno()) {
-            die("DATABASE failed " . mysqli_error($this->conn));
+        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if($this->conn->connect_errno) {
+            die("DATABASE failed " . $this->conn->connect_error);
         }
     }
 
     public function query($sql) {
-        $result = mysqli_query($this->conn, $sql);
-        if(!$result) {
-            die("Query failed");
-        }
-        return $result;
+         $result = $this->conn->query($sql);
+         $this->confirm_query($result);
+         return $result;
     }
+
+    private function confirm_query($result)  {
+        if(!$result) {
+            die("Query failed" . $this->conn->connect_error);
+        }
+    }
+
+    public function escape_string($string) {
+       return mysqli_real_escape_string($this->conn,$string);
+       return $this->conn->real_escape_string($string);
+
+    }
+
+
+
 }
 
 $db = new Database();
