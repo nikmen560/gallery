@@ -5,7 +5,7 @@ class User {
     public $user_id;
     public $username;
     public $user_password;
-    public $user_first_tname;
+    public $user_first_name;
     public $user_last_name;
 
     public static function get_all_users() {
@@ -13,7 +13,9 @@ class User {
 
     }
     public static function get_user_by_id($user_id) {
-        return self::find_this_query("SELECT * FROM users WHERE user_id = $user_id LIMIT 1");
+        $result_arr = self::find_this_query("SELECT * FROM users WHERE user_id = $user_id LIMIT 1");
+        return !empty($result_arr) ? array_shift($result_arr) : false;
+
     }
 
     public static function find_this_query($sql) {
