@@ -7,6 +7,10 @@ spl_autoload_register(function ($class) {
     } else {
         die("file '{$class}.php' was not found");
     }
-})
+});
+
+function redirect($location) {
+    header("Location: /$location");
+}
 
 ?>
