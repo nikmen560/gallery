@@ -1,5 +1,9 @@
 <?php ob_start(); ?>
-<?php include("init.php"); ?>
+<?php require_once("init.php"); ?>
+<?php 
+if(!$session->get_is_signed_in()) redirect("cms/admin/login.php");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
