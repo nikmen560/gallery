@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 <?php require_once("init.php"); ?>
 <?php 
-if(!$session->get_is_signed_in()) redirect("cms/admin/login.php");
+// if(!$session->get_is_signed_in()) redirect("gallery/index.php");
 
 ?>
 
