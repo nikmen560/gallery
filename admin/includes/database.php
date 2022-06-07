@@ -14,7 +14,7 @@ class Database {
     public function open_db_connection() {
         $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if($this->conn->connect_errno) {
-            die("DATABASE failed " . $this->conn->connect_error);
+            die("DATABASE failed " . $this->conn->error);
         }
     }
 
@@ -26,7 +26,7 @@ class Database {
 
     private function confirm_query($result)  {
         if(!$result) {
-            die("Query failed" . $this->conn->connect_error);
+            die("query not confirmed" . $this->conn->error);
         }
     }
 
