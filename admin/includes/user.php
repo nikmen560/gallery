@@ -29,6 +29,16 @@ class User {
         return $obj_arr;
     }
 
+    public static function verify_user($username, $password) {
+        global $db;
+        $username = $db->escape_string($username);
+        $password = $db->escape_string($password);
+        $sql = "SELECT * FROM users WHERE username = '$username' AND user_password = '$password' LIMIT 1";
+        $result_arr = self::find_this_query($sql);
+        var_dump($result_arr);
+        return !empty($result_arr) ? array_shift($result_arr) : false;
+    }
+
     public static function instatiation($user_arr) {
         $user_obj = new self;
         foreach($user_arr as $attribute => $value) {
@@ -43,6 +53,9 @@ class User {
         $object_properties = get_object_vars($this);
         return array_key_exists($attr, $object_properties);
     }
+
+
+
 }
 
 
