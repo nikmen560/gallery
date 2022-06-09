@@ -81,7 +81,16 @@ class User
         $stmt = $db->conn->prepare($sql);
             $stmt->bind_param("ssssi", $this->username, $this->user_password, $this->user_first_name, $this->user_last_name, $this->user_id);
             $stmt->execute();
-            $this->user_id = $db->insert_id();
+            return ($db->conn->affected_rows == 1) ? true: false;
+
+    }
+    public function delete()
+    {
+        global $db;
+        $sql = "DELETE FROM users WHERE user_id = ? LIMIT 1";
+        $stmt = $db->conn->prepare($sql);
+            $stmt->bind_param("i", $this->user_id);
+            $stmt->execute();
             return ($db->conn->affected_rows == 1) ? true: false;
 
     }
