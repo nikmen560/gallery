@@ -68,9 +68,21 @@ class User
             $this->user_id = $db->insert_id();
             return true;
         } else {
-
-
+            return false;
         }
+
+    }
+
+    public function update()
+    {
+        global $db;
+        $sql = "UPDATE users SET username = ?, user_password = ?, user_first_name = ?, user_last_name = ? WHERE user_id = ?";
+        
+        $stmt = $db->conn->prepare($sql);
+            $stmt->bind_param("ssssi", $this->username, $this->user_password, $this->user_first_name, $this->user_last_name, $this->user_id);
+            $stmt->execute();
+            $this->user_id = $db->insert_id();
+            return ($db->conn->affected_rows == 1) ? true: false;
 
     }
 }
