@@ -58,6 +58,13 @@ class User
         $object_properties = get_object_vars($this);
         return array_key_exists($attr, $object_properties);
     }
+    public function save()
+    {
+        return isset($this->user_id) ? $this->update() : $this->create();
+    }
+
+
+
     public function create() 
     {
         global $db;
