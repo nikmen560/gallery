@@ -66,14 +66,25 @@ class User
 
     protected function properties()
     {
-        // return get_object_vars($this);
         $properties = array();
         foreach (self::$db_table_fields as $db_field) {
             if (property_exists($this, $db_field)) {
                 $properties[$db_field] = $this->$db_field;
             }
-            return $properties;
         }
+        return $properties;
+    }
+
+    protected function clean_properties() 
+    {
+        global $db;
+        $clean_properties = array();
+        foreach($this->properties() as $key => $value){ 
+            if(!is_null($value)) {
+                $clean_properties[$key] = $db->escape_string($value);
+            }
+        }
+        return $clean_properties;
     }
     // protected function prepare_sql_values()
     // {
@@ -119,7 +130,7 @@ class User
     public function create()
     {
         global $db;
-        $properties = $this->properties();
+        $properties = $this->clean_properties();
         $sql = "INSERT INTO " . self::$db_table . "(" . implode(',', array_keys($properties)) . ")" . " VALUES ('" . implode("','", array_values($properties)) . "')";
         if ($db->query($sql)) {
             $this->user_id = $db->insert_id();
@@ -128,17 +139,39 @@ class User
             return false;
         }
     }
-
     public function update()
     {
-        global $db;
-        $sql = "UPDATE " . self::$db_table . " SET username = ?, user_password = ?, user_first_name = ?, user_last_name = ? WHERE user_id = ?";
 
-        $stmt = $db->conn->prepare($sql);
-        $stmt->bind_param("ssssi", $this->username, $this->user_password, $this->user_first_name, $this->user_last_name, $this->user_id);
-        $stmt->execute();
+        global $db;
+        $properties = $this->clean_properties();
+        var_dump($properties);
+        $properties_pairs = array();
+        foreach($properties as $key => $value) {
+            $properties_pairs[] = "{$key}='{$value}'";
+        }
+
+        $sql = "UPDATE " . self::$db_table . " SET " . implode(", ", $properties_pairs) . " WHERE user_id = $this->user_id";
+        var_dump($sql);
+        $db->query($sql);
         return ($db->conn->affected_rows == 1) ? true : false;
     }
+
+    // public function update()
+    // {
+    //     global $db;
+    //     $properties = $this->properties();
+    //     $properties_pairs = array();
+    //     foreach($properties as $key => $value) {
+    //         $properties_pairs[] = "{$key}='{$value}'";
+    //     }
+
+    //     $sql = "UPDATE " . self::$db_table . " SET username = ?, user_password = ?, user_first_name = ?, user_last_name = ? WHERE user_id = ?";
+
+    //     $stmt = $db->conn->prepare($sql);
+    //     $stmt->bind_param("ssssi", $this->username, $this->user_password, $this->user_first_name, $this->user_last_name, $this->user_id);
+    //     $stmt->execute();
+    //     return ($db->conn->affected_rows == 1) ? true : false;
+    // }
     public function delete()
     {
         global $db;
