@@ -5,15 +5,15 @@ class Db_object
 
     public static function get_all()
     {
-        return static::find_this_query("SELECT * FROM ". static::$db_table);
+        return static::find_by_query("SELECT * FROM ". static::$db_table);
     }
     public static function get_by_id($user_id)
     {
-        $result_arr = static::find_this_query("SELECT * FROM " . static::$db_table . " WHERE user_id = $user_id LIMIT 1");
+        $result_arr = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE user_id = $user_id LIMIT 1");
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
 
-    public static function find_this_query($sql)
+    public static function find_by_query($sql)
     {
         global $db;
         $result_set = $db->query($sql)->fetch_all(MYSQLI_ASSOC);
@@ -107,7 +107,3 @@ class Db_object
     }
 
 }
-
-
-
-?>
