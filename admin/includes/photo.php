@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Photo extends Db_object
 {
@@ -12,7 +12,7 @@ class Photo extends Db_object
     public $photo_size;
 
     public $tmp_path;
-    public $dir = "images";
+    public $upl_dir = "images";
 
     public $custom_errors_arr = array();
     public $upload_errors_arr = array(
@@ -26,7 +26,52 @@ class Photo extends Db_object
         UPLOAD_ERR_EXTENSION => "a php ext stoped the file upload"
     );
 
+    public function set_file($file)
+    {
+        if (empty($file) || !$file || !is_array($file)) {
+            $this->custom_errors_arr[] = "There was no file uploaded here";
+            return false;
+        } elseif ($file['error'] != 0) {
+            $this->custom_errors_arr[] = $this->upload_errors_arr[$file['error']];
+            return false;
+        } else {
+            $this->photo_filename = basename($file['name']);
+            $this->tmp_path = $file['tmp_name'];
+            $this->photo_type = $file['type'];
+            $this->photo_size = $file['size'];
+            return true;
+        }
+    }
+    public function save()
+    {
+        if ($this->photo_id) {
+            $this->update();
+        } else {
+            if (!empty($this->errors)) {
+                return false;
+            }
+            if (empty($this->photo_filename) || empty($this->tmp_path)) {
+                $this->custom_errors_arr[] = "the file not available";
+            }
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upl_dir . DS . $this->photo_filename;
 
+            if (file_exists($target_path)) {
+                $this->custom_errors_arr[]  = "the file {$this->photo_filename} already exists";
+                return false;
+            }
+            if (move_uploaded_file($this->tmp_path, $target_path)) {
+                if ($this->create()) {
+                    unset($this->tmp_path);
+                    return true;
+                }
+            } else {
+                $this->custom_errors_arr[] = "the folder does not have permossion";
+                return false;
+            }
+        }
+    }
+    public function picture_path()
+    {
+        return $this->upl_dir.DS.$this->photo_filename;
+    }
 }
-
-?>
