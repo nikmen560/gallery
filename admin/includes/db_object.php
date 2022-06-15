@@ -7,9 +7,9 @@ class Db_object
     {
         return static::find_by_query("SELECT * FROM ". static::$db_table);
     }
-    public static function get_by_id($user_id)
+    public static function get_by_id($id)
     {
-        $result_arr = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE user_id = $user_id LIMIT 1");
+        $result_arr = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE id = $id LIMIT 1");
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
 
@@ -24,16 +24,16 @@ class Db_object
         }
         return $obj_arr;
     }
-    public static function instatiation($user_arr)
+    public static function instatiation($arr)
     {
         $calling_class = get_called_class();
-        $user_obj = new $calling_class;
-        foreach ($user_arr as $attribute => $value) {
-            if ($user_obj->has_the_attribute($attribute)) {
-                $user_obj->$attribute = $value;
+        $obj = new $calling_class;
+        foreach ($arr as $attribute => $value) {
+            if ($obj->has_the_attribute($attribute)) {
+                $obj->$attribute = $value;
             }
         }
-        return $user_obj;
+        return $obj;
     }
 
     private function has_the_attribute($attr)
@@ -43,7 +43,7 @@ class Db_object
     }
     public function save()
     {
-        return isset($this->user_id) ? $this->update() : $this->create();
+        return isset($this->id) ? $this->update() : $this->create();
     }
 
     protected function properties()
@@ -74,7 +74,7 @@ class Db_object
         $properties = $this->clean_properties();
         $sql = "INSERT INTO " . static::$db_table . "(" . implode(',', array_keys($properties)) . ")" . " VALUES ('" . implode("','", array_values($properties)) . "')";
         if ($db->query($sql)) {
-            $this->user_id = $db->insert_id();
+            $this->id = $db->insert_id();
             return true;
         } else {
             return false;
@@ -91,7 +91,7 @@ class Db_object
             $properties_pairs[] = "{$key}='{$value}'";
         }
 
-        $sql = "UPDATE " . static::$db_table . " SET " . implode(", ", $properties_pairs) . " WHERE user_id = $this->user_id";
+        $sql = "UPDATE " . static::$db_table . " SET " . implode(", ", $properties_pairs) . " WHERE id = $this->id";
         var_dump($sql);
         $db->query($sql);
         return ($db->conn->affected_rows == 1) ? true : false;
@@ -99,9 +99,9 @@ class Db_object
     public function delete()
     {
         global $db;
-        $sql = "DELETE FROM " . static::$db_table . " WHERE user_id = ? LIMIT 1";
+        $sql = "DELETE FROM " . static::$db_table . " WHERE id = ? LIMIT 1";
         $stmt = $db->conn->prepare($sql);
-        $stmt->bind_param("i", $this->user_id);
+        $stmt->bind_param("i", $this->id);
         $stmt->execute();
         return ($db->conn->affected_rows == 1) ? true : false;
     }

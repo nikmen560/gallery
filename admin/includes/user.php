@@ -3,12 +3,12 @@
 class User extends Db_object
 {
     protected static $db_table = "users";
-    protected static $db_table_fields = array('username', 'user_password', 'user_first_name', 'user_last_name');
-    public $user_id;
+    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name');
+    public $id;
     public $username;
-    public $user_password;
-    public $user_first_name;
-    public $user_last_name;
+    public $password;
+    public $first_name;
+    public $last_name;
 
 
     public static function verify_user($username, $password)
@@ -16,7 +16,7 @@ class User extends Db_object
         global $db;
         $username = $db->escape_string($username);
         $password = $db->escape_string($password);
-        $sql = "SELECT * FROM users WHERE username = '$username' AND user_password = '$password' LIMIT 1";
+        $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password' LIMIT 1";
         $result_arr = self::find_by_query($sql);
         var_dump($result_arr);
         return !empty($result_arr) ? array_shift($result_arr) : false;
@@ -56,12 +56,12 @@ class User extends Db_object
     //     $sql = "INSERT INTO " . self::$db_table . " (" . implode(', ', array_keys($properties)) . ") " . "VALUES (" . $this->prepare_sql_values() . ")";
     //     var_dump($sql);
 
-    //     $parrams = [$this->username, $this->user_password, $this->user_first_name, $this->user_last_name,];
+    //     $parrams = [$this->username, $this->password, $this->first_name, $this->last_name,];
     //     if ($stmt = $db->conn->prepare($sql)) {
 
     //         $stmt->bind_param($this->get_properties_types(), ...$parrams);
     //         $stmt->execute();
-    //         $this->user_id = $db->insert_id();
+    //         $this->id = $db->insert_id();
     //         return true;
     //     } else {
     //         return false;
@@ -77,10 +77,10 @@ class User extends Db_object
     //         $properties_pairs[] = "{$key}='{$value}'";
     //     }
 
-    //     $sql = "UPDATE " . self::$db_table . " SET username = ?, user_password = ?, user_first_name = ?, user_last_name = ? WHERE user_id = ?";
+    //     $sql = "UPDATE " . self::$db_table . " SET username = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?";
 
     //     $stmt = $db->conn->prepare($sql);
-    //     $stmt->bind_param("ssssi", $this->username, $this->user_password, $this->user_first_name, $this->user_last_name, $this->user_id);
+    //     $stmt->bind_param("ssssi", $this->username, $this->password, $this->first_name, $this->last_name, $this->id);
     //     $stmt->execute();
     //     return ($db->conn->affected_rows == 1) ? true : false;
     // }
