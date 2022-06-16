@@ -3,12 +3,16 @@
 class User extends Db_object
 {
     protected static $db_table = "users";
-    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name');
+    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name', 'image', 'email', 'role');
     public $id;
     public $username;
     public $password;
     public $first_name;
     public $last_name;
+    public $image;
+    public $email;
+    public $role;
+    public $upload_directory = "user_avatars";
 
 
     public static function verify_user($username, $password)
@@ -21,7 +25,6 @@ class User extends Db_object
         var_dump($result_arr);
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
-
 
 
 
