@@ -22,7 +22,7 @@
           <a class="nav-link mx-2" href="photos.php"><i class="fas fa-plus-circle pe-2"></i>Photos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link mx-2" href="uploads.php"><i class="fas fa-bell pe-2"></i>Uploads</a>
+          <a class="nav-link mx-2" href="upload.php"><i class="fas fa-bell pe-2"></i>Uploads</a>
         </li>
         <li class="nav-item">
           <a class="nav-link mx-2" href="#!"><i class="fas fa-heart pe-2"></i>Trips</a>
