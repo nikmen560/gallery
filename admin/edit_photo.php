@@ -19,7 +19,7 @@ if(isset($_POST['update'])) {
 
 
 <div class="d-flex justify-content-center ">
-    <form method="POST" class="col-md-6 " action="update_photo.php" enctype="multipart/form-data">
+    <form method="POST" class="col-md-6 " action="" enctype="multipart/form-data">
         <!-- Text input -->
         <div class="form-outline mb-4">
             <input type="text" name="title" id="title" class="form-control" value="<?= $photo->title ?>" />
