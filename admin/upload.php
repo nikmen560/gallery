@@ -5,8 +5,8 @@
         <?php 
         if(isset($_POST['submit'])) {
             $photo = new Photo();
-            $photo->photo_title = $_POST['title'];
-            $photo->photo_description = $_POST['description'];
+            $photo->title = $_POST['title'];
+            $photo->description = $_POST['description'];
             $photo->set_file($_FILES['upload']);
             if($photo->save()) {
                 var_dump("success");
