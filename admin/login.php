@@ -1,25 +1,11 @@
-
 <?php require_once("includes/header.php"); ?>
-
 <?php require_once("includes/admin_navigation.php"); ?>
 <?php 
-
-
-
 if($session->get_is_signed_in()) {
-    redirect('gallery/admin/index.php');
+    redirect('admin/index.php');
 }
-
-
 ?>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
-        <?php require_once("includes/admin_content.php"); ?>
-
-        <?php 
+<?php 
 
 if(isset($_POST['submit'])) {
     $username = trim($_POST['username']);
@@ -28,7 +14,7 @@ $user_found = User::verify_user($username, $password);
 
     if($user_found) {
         $session->login($user_found);
-        redirect('gallery/admin/index.php');
+        redirect('admin/index.php');
     } else {
         $msg = "Your password or username are incorrect";
     }
