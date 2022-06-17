@@ -2,7 +2,7 @@
 
 class Session {
     private $signed_in = false;
-    public $user_id;
+    public $id;
     public $message;
 
     function __construct()
@@ -17,23 +17,23 @@ class Session {
     public function login($user) {
         if($user) {
             $_SESSION['signed_in'] = true;
-            $this->user_id = $_SESSION['user_id'] = $user->user_id;
+            $this->id = $_SESSION['id'] = $user->id;
             $this->signed_in = $_SESSION['signed_in'] = true;
 
         }
     }
     private function check_sign_in() {
-        if(isset($_SESSION['user_id'])) {
-            $this->user_id = $_SESSION['user_id'];
+        if(isset($_SESSION['id'])) {
+            $this->id = $_SESSION['id'];
             $this->signed_in = $_SESSION['signed_in'];
         } else {
-            unset($this->user_id);
+            unset($this->id);
             $this->signed_in = false;
         }
     }
     public function logout() {
-        unset($_SESSION['user_id']);
-        unset($this->user_id);
+        unset($_SESSION['id']);
+        unset($this->id);
         $this->signed_in = false;
     }
     public function message($msg="") {
