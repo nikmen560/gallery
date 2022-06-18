@@ -25,66 +25,59 @@ class User extends Db_object
         var_dump($result_arr);
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
+    public function set_file($file)
+    {
+        if (empty($file) || !$file || !is_array($file)) {
+            $this->custom_errors_arr[] = "There was no file uploaded here";
+            return false;
+        } elseif ($file['error'] != 0) {
+            $this->custom_errors_arr[] = $this->upload_errors_arr[$file['error']];
+            return false;
+        } else {
+            $this->image = basename($file['name']);
+            $this->tmp_path = $file['tmp_name'];
+            $this->type = $file['type'];
+            $this->size = $file['size'];
+            return true;
+        }
+    }
+    public function save()
+    {
+        if ($this->id) {
+            $this->update();
+        } else {
+            if (!empty($this->errors)) {
+                return false;
+            }
+            if (empty($this->image) || empty($this->tmp_path)) {
+                $this->custom_errors_arr[] = "the file not available";
+            }
+            $target_path = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
 
+            if (file_exists($target_path)) {
+                $this->custom_errors_arr[]  = "the file {$this->image} already exists";
+                return false;
+            }
+            if (move_uploaded_file($this->tmp_path, $target_path)) {
+                if ($this->create()) {
+                    unset($this->tmp_path);
+                    return true;
+                }
+            } else {
+                $this->custom_errors_arr[] = "the folder does not have permossion";
+                return false;
+            }
+        }
+    }
+    private function get_image_placeholder()
+    {
+        return '/gallery/admin/images/user_avatars/portrait_placeholder.png';
+    }
+    public function image_path()
+    {
+        $get_image_path = '/gallery/admin/images/user_avatars/' . $this->image;
+        $path_to_image = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
+        return file_exists($path_to_image) ? $get_image_path: $this->get_image_placeholder();
+    }
 
-
-
-    // protected function prepare_sql_values()
-    // {
-    //     $sql_values = '';
-    //     for ($i = 2; $i <= count($this->properties()); $i++) {
-    //         ($i != count($this->properties())) ? $sql_values .= '?,' : $sql_values .= '?';
-    //     }
-    //     return $sql_values;
-    // }
-
-    // protected function get_properties_types()
-    // {
-    //     $obj_values =  array_values($this->properties());
-    //     $types = '';
-    //     for ($i = 1; $i < count($obj_values); $i++) {
-    //         (intval($obj_values[$i]) > 0) ? $types .= 'i' : $types .= 's';
-    //     }
-    //     return $types;
-    // }
-
-    // public function create()
-    // {
-    //     global $db;
-    //      $properties = $this->properties();
-    //      $keys = array_keys($properties);
-    //      unset($properties[$keys[0]]);
-
-    //     var_dump($properties);
-    //     $sql = "INSERT INTO " . self::$db_table . " (" . implode(', ', array_keys($properties)) . ") " . "VALUES (" . $this->prepare_sql_values() . ")";
-    //     var_dump($sql);
-
-    //     $parrams = [$this->username, $this->password, $this->first_name, $this->last_name,];
-    //     if ($stmt = $db->conn->prepare($sql)) {
-
-    //         $stmt->bind_param($this->get_properties_types(), ...$parrams);
-    //         $stmt->execute();
-    //         $this->id = $db->insert_id();
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // public function update()
-    // {
-    //     global $db;
-    //     $properties = $this->properties();
-    //     $properties_pairs = array();
-    //     foreach($properties as $key => $value) {
-    //         $properties_pairs[] = "{$key}='{$value}'";
-    //     }
-
-    //     $sql = "UPDATE " . self::$db_table . " SET username = ?, password = ?, first_name = ?, last_name = ? WHERE id = ?";
-
-    //     $stmt = $db->conn->prepare($sql);
-    //     $stmt->bind_param("ssssi", $this->username, $this->password, $this->first_name, $this->last_name, $this->id);
-    //     $stmt->execute();
-    //     return ($db->conn->affected_rows == 1) ? true : false;
-    // }
 }
