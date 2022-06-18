@@ -15,34 +15,7 @@ class Photo extends Db_object
     public $tmp_path;
     public $upl_dir = "images";
 
-    public $custom_errors_arr = array();
-    public $upload_errors_arr = array(
-        UPLOAD_ERR_OK => "THERE IS NO ERR",
-        UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload max_filesize",
-        UPLOAD_ERR_FORM_SIZE => "The upl file exceed the max_file_size",
-        UPLOAD_ERR_PARTIAL => "the upl file was only partially uploaded",
-        UPLOAD_ERR_NO_FILE => "no file was uploaded",
-        UPLOAD_ERR_NO_TMP_DIR => "Miss a temp folder",
-        UPLOAD_ERR_CANT_WRITE => "failed to write file to disk",
-        UPLOAD_ERR_EXTENSION => "a php ext stoped the file upload"
-    );
 
-    public function set_file($file)
-    {
-        if (empty($file) || !$file || !is_array($file)) {
-            $this->custom_errors_arr[] = "There was no file uploaded here";
-            return false;
-        } elseif ($file['error'] != 0) {
-            $this->custom_errors_arr[] = $this->upload_errors_arr[$file['error']];
-            return false;
-        } else {
-            $this->filename = basename($file['name']);
-            $this->tmp_path = $file['tmp_name'];
-            $this->type = $file['type'];
-            $this->size = $file['size'];
-            return true;
-        }
-    }
     public function save()
     {
         if ($this->id) {
