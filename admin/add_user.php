@@ -8,12 +8,9 @@
    $user->email = $_POST['email'] ;
    $user->role = $_POST['role'] ;
    $user->set_file($_FILES['user_avatar']);
-   var_dump($user->save_with_image());
-   var_dump($user);
-
-    
-    
-}?>
+   $user->save();
+}
+?>
 
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-outline mb-4">
