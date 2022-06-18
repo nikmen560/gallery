@@ -19,7 +19,7 @@ $users = User::get_all();
       <td>
         <div class="d-flex align-items-center">
           <img
-              src="images/<?= $user->image ?>" 
+              src="<?= $user->image_path() ?>" 
               alt=""
               style="width: 45px; height: 45px"
               class="rounded-circle"
@@ -39,9 +39,9 @@ $users = User::get_all();
       </td>
       <td>Senior</td>
       <td>
-        <button type="button" class="btn btn-link btn-sm btn-rounded">
-          Edit
-        </button>
+        <a href="edit_user.php?id=<?= $user->id; ?>" class="btn btn-link btn-sm btn-rounded">
+           Edit 
+        </a>
         <a href="delete_user.php?id=<?= $user->id; ?>" class="btn btn-danger btn-sm btn-rounded">
             Delete
         </a>
