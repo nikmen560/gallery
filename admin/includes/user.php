@@ -41,32 +41,32 @@ class User extends Db_object
             return true;
         }
     }
-    public function save()
+    public function save_with_image()
     {
-        if ($this->id) {
-            $this->update();
-        } else {
-            if (!empty($this->errors)) {
-                return false;
-            }
-            if (empty($this->image) || empty($this->tmp_path)) {
-                $this->custom_errors_arr[] = "the file not available";
-            }
-            $target_path = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
 
-            if (file_exists($target_path)) {
-                $this->custom_errors_arr[]  = "the file {$this->image} already exists";
-                return false;
-            }
-            if (move_uploaded_file($this->tmp_path, $target_path)) {
-                if ($this->create()) {
-                    unset($this->tmp_path);
-                    return true;
-                }
+        if (!empty($this->errors)) {
+            return false;
+        }
+        if (empty($this->image) || empty($this->tmp_path)) {
+            $this->custom_errors_arr[] = "the file not available";
+        }
+        $target_path = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
+
+        if (file_exists($target_path)) {
+            $this->custom_errors_arr[]  = "the file {$this->image} already exists";
+            return false;
+        }
+        if (move_uploaded_file($this->tmp_path, $target_path)) {
+            if ($this->id) {
+                $this->update();
             } else {
-                $this->custom_errors_arr[] = "the folder does not have permossion";
-                return false;
+                $this->create();
             }
+            unset($this->tmp_path);
+            return true;
+        } else {
+            $this->custom_errors_arr[] = "the folder does not have permossion";
+            return false;
         }
     }
     private function get_image_placeholder()
@@ -77,7 +77,6 @@ class User extends Db_object
     {
         $get_image_path = '/gallery/admin/images/user_avatars/' . $this->image;
         $path_to_image = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
-        return file_exists($path_to_image) ? $get_image_path: $this->get_image_placeholder();
+        return file_exists($path_to_image) ? $get_image_path : $this->get_image_placeholder();
     }
-
 }
