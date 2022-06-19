@@ -1,5 +1,6 @@
 <?php require_once("includes/navigation.php") ?>
 <?php $photo = Photo::get_by_id($_GET['photo']) ?>
+<?php $comments = Comment::get_all_comments($_GET['photo']) ?>
 
 <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="img/hero.jpg">
     <form class="d-flex tm-search-form">
@@ -53,10 +54,11 @@
     </div>
 
     <div class="row mb-4">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container">
             <div class="be-comment-block">
                 <h1 class="comments-title">Comments (3)</h1>
+
+                <?php foreach($comments as $comment): ?>
                 <div class="be-comment">
                     <div class="be-img-comment">
                         <a href="blog-detail-2.html">
@@ -66,7 +68,7 @@
                     <div class="be-comment-content">
 
                         <span class="be-comment-name">
-                            <a href="blog-detail-2.html">Ravi Sah</a>
+                            <a href="blog-detail-2.html"><?= $comment->author ?></a>
                         </span>
                         <span class="be-comment-time">
                             <i class="fa fa-clock-o"></i>
@@ -74,12 +76,11 @@
                         </span>
 
                         <p class="be-comment-text">
-                            Pellentesque gravida tristique ultrices.
-                            Sed blandit varius mauris, vel volutpat urna hendrerit id.
-                            Curabitur rutrum dolor gravida turpis tristique efficitur.
+                            <?= $comment->body ?>
                         </p>
                     </div>
                 </div>
+                <?php endforeach; ?>
                 <div class="be-comment">
                     <div class="be-img-comment">
                         <a href="blog-detail-2.html">
