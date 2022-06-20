@@ -2,9 +2,14 @@
 
 <?php 
 $comment = Comment::get_by_id($_GET['id']);
+
 if($comment) {
     $comment->delete();
-    redirect('admin/comments.php');
+    if(isset($_GET['photo'])) {
+        redirect("admin/comments.php?photo={$_GET['photo']}");
+    } else {
+        redirect('admin/comments.php');
+    }
 } else {
     redirect('admin/comments.php');
 }
