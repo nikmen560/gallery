@@ -21,7 +21,7 @@ class Comment extends Db_object
             return false;
         }
     }
-    public static function get_all_comments($photo_id) 
+    public static function get_all_comments($photo_id = 0) 
     {
         global $db;
         
