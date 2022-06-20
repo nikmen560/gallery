@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
     <div class="row mb-4">
         <div class="container">
             <div class="be-comment-block">
-                <h1 class="comments-title">Comments (3)</h1>
+                <h1 class="comments-title">Comments (<?= count($comments) ?>)</h1>
 
                 <?php foreach ($comments as $comment) : ?>
                     <div class="be-comment">
