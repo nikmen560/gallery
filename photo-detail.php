@@ -3,6 +3,22 @@
 <?php $photo = Photo::get_by_id($_GET['photo']) ?>
 <?php $comments = Comment::get_all_comments($_GET['photo']) ?>
 
+<?php
+if (isset($_POST['submit'])) {
+    $author = trim($_POST['username']);
+    $body = trim($_POST['body']);
+
+    $new_comment = Comment::create_comment($photo->id, $author, $body);
+
+    if ($new_comment && $new_comment->save()) {
+        redirect("photo-detail.php?photo=$photo->id");
+    } else {
+        $message = "THere was some problems with saving";
+    }
+}
+
+?>
+
 
 <div class="container-fluid tm-container-content tm-mt-60">
     <div class="row mb-4">
@@ -51,28 +67,28 @@
             <div class="be-comment-block">
                 <h1 class="comments-title">Comments (3)</h1>
 
-                <?php foreach($comments as $comment): ?>
-                <div class="be-comment">
-                    <div class="be-img-comment">
-                        <a href="blog-detail-2.html">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
-                        </a>
-                    </div>
-                    <div class="be-comment-content">
+                <?php foreach ($comments as $comment) : ?>
+                    <div class="be-comment">
+                        <div class="be-img-comment">
+                            <a href="blog-detail-2.html">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                            </a>
+                        </div>
+                        <div class="be-comment-content">
 
-                        <span class="be-comment-name">
-                            <a href="blog-detail-2.html"><?= $comment->author ?></a>
-                        </span>
-                        <span class="be-comment-time">
-                            <i class="fa fa-clock-o"></i>
-                            May 27, 2015 at 3:14am
-                        </span>
+                            <span class="be-comment-name">
+                                <a href="blog-detail-2.html"><?= $comment->author ?></a>
+                            </span>
+                            <span class="be-comment-time">
+                                <i class="fa fa-clock-o"></i>
+                                May 27, 2015 at 3:14am
+                            </span>
 
-                        <p class="be-comment-text">
-                            <?= $comment->body ?>
-                        </p>
+                            <p class="be-comment-text">
+                                <?= $comment->body ?>
+                            </p>
+                        </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
                 <div class="be-comment">
                     <div class="be-img-comment">
@@ -112,26 +128,26 @@
                         </p>
                     </div>
                 </div>
-                <form class="form-block">
+                <form class="form-block" action="" method="POST">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-user"></i></div>
-                                <input class="form-input" type="text" placeholder="Your name">
+                                <input class="form-input" type="text" required name="username" placeholder="Your name">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 fl_icon">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                <input class="form-input" type="text" placeholder="Your email">
+                                <input class="form-input" type="text" required name="email" placeholder="Your email">
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <textarea class="form-input" required="" placeholder="Your text"></textarea>
+                                <textarea class="form-input" required name="body" placeholder="Your text"></textarea>
                             </div>
                         </div>
-                        <a class="btn btn-primary pull-right">submit</a>
+                        <input type="submit" class="btn btn-primary pull-right" name="submit">
                     </div>
                 </form>
             </div>
