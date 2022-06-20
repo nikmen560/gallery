@@ -1,9 +1,7 @@
 <?php include("includes/admin_navigation.php"); ?>
 <?php
 $comments = Comment::get_all();
-if(isset($_GET['photo'])){
-    $comments = Comment::get_all_comments($_GET['photo']);
-}
+if(isset($_GET['photo'])) $comments = Comment::get_all_comments($_GET['photo']);
 ?>
 
 <table class="table align-middle mb-0 bg-white">
@@ -43,9 +41,15 @@ if(isset($_GET['photo'])){
         <a href="edit_comment.php?id=<?= $comment->id; ?>" class="btn btn-link btn-sm btn-rounded">
            Edit 
         </a>
+        <?php if(isset($_GET['photo'])): ?>
+        <a href="delete_comment.php?photo=<?= $comment->photo_id ?>&id=<?=$comment->id?>" class="btn btn-danger btn-sm btn-rounded">
+            Delete
+        </a>
+        <?php else: ?>
         <a href="delete_comment.php?id=<?= $comment->id; ?>" class="btn btn-danger btn-sm btn-rounded">
             Delete
         </a>
+        <?php endif; ?>
       </td>
     </tr>
     <?php endforeach; ?>
