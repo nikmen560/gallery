@@ -134,4 +134,12 @@ class Db_object
         $stmt->execute();
         return ($db->conn->affected_rows == 1) ? true : false;
     }
+    public static function count_all()
+    {
+        global $db;
+
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table;
+        $result_set = $db->query($sql)->fetch_all(MYSQLI_NUM);
+        return array_shift($result_set[0]);
+    }
 }
