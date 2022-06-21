@@ -4,12 +4,23 @@ class Session {
     private $signed_in = false;
     public $id;
     public $message;
+    public $count;
 
     function __construct()
     {
         session_start();
         $this->check_sign_in();
+        $this->count_visitors();
         $this->check_message();
+    }
+
+    public function count_visitors()
+    {
+        if(isset($_SESSION['count'])) {
+            return $this->count = $_SESSION['count']++;
+        } else {
+            return $_SESSION['count'] = 1;
+        }
     }
     public function get_is_signed_in() {
         return $this->signed_in;
