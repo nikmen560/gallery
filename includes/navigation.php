@@ -1,6 +1,4 @@
 <?php require_once("head.php") ?>
-<?php require_once("admin/includes/init.php") ?>
-<?php require_once("admin/includes/photo.php") ?>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="/gallery/index.php">
