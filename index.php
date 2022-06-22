@@ -1,48 +1,75 @@
 <?php require_once("includes/navigation.php") ?>
 <?php require_once("includes/search.php") ?>
 
-<?php $photos = Photo::get_all() ?>
+<?php
+$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+$items_per_page = 2;
+$items_total_count = Photo::count_all();
+
+$paginate = new Paginate($page, $items_per_page, $items_total_count);
+$sql = "SELECT * FROM photos LIMIT {$items_per_page} OFFSET {$paginate->offset()}";
+$photos = Photo::find_by_query($sql);
+?>
 
 
-    <div class="container-fluid tm-container-content tm-mt-60">
-        <div class="row mb-4">
-            <h2 class="col-6 tm-text-primary">
-                Latest Photos
-            </h2>
-            <div class="col-6 d-flex justify-content-end align-items-center">
-                <form action="" class="tm-text-primary">
-                    Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 200
-                </form>
-            </div>
+<div class="container-fluid tm-container-content tm-mt-60">
+    <div class="row mb-4">
+        <h2 class="col-6 tm-text-primary">
+            Latest Photos
+        </h2>
+        <div class="col-6 d-flex justify-content-end align-items-center">
+            <form action="" class="tm-text-primary">
+                Page <input type="text" value="1" size="1" class="tm-input-paging tm-text-primary"> of 200
+            </form>
         </div>
-        <div class="row tm-mb-90 tm-gallery">
-            <?php foreach($photos as $photo): ?>
-        	<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+    </div>
+    <div class="row tm-mb-90 tm-gallery">
+        <?php foreach ($photos as $photo) : ?>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                 <figure class="effect-ming tm-video-item">
                     <img src="/gallery/admin/<?= $photo->picture_path() ?>" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2><?= $photo->title ?></h2>
                         <a href="photo-detail.php?photo=<?= $photo->id ?>">View more</a>
-                    </figcaption>                    
+                    </figcaption>
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
                     <span class="tm-text-gray-light">18 Oct 2020</span>
                     <span>9,906 views</span>
                 </div>
             </div>
-            <?php endforeach; ?>
-        </div> <!-- row -->
-        <div class="row tm-mb-90">
-            <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
-                <a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
-                <div class="tm-paging d-flex">
-                    <a href="javascript:void(0);" class="active tm-paging-link">1</a>
-                    <a href="javascript:void(0);" class="tm-paging-link">2</a>
-                    <a href="javascript:void(0);" class="tm-paging-link">3</a>
-                    <a href="javascript:void(0);" class="tm-paging-link">4</a>
-                </div>
-                <a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>
-            </div>            
+        <?php endforeach; ?>
+    </div> <!-- row -->
+    <div class="row tm-mb-90">
+        <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
+            <?php if ($paginate->has_previous()) : ?>
+                <a href="/gallery/index.php?page=<?= $paginate->previous() ?>" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
+            <?php else : ?>
+                <a  class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
+            <?php endif; ?>
+            <div class="tm-paging d-flex">
+                <?php
+                for ($i = 1; $i <= $paginate->items_total_count; $i++) {
+                    if ($i <= 4) {
+                        if ($paginate->current_page == $i) {
+                            echo "<a href='/gallery/index.php?page={$i}' class=' tm-paging-link active'>{$i}</a>";
+                        } else {
+                            echo "<a href='/gallery/index.php?page={$i}' class=' tm-paging-link'>{$i}</a>";
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                ?>
+
+            </div>
+            <?php if ($paginate->has_next()) : ?>
+                <a href="/gallery/index.php?page=<?= $paginate->next() ?>" class="btn btn-primary tm-btn-next">Next Page</a>
+            <?php else : ?>
+                <a class="btn btn-primary tm-btn-next disabled ">Next Page</a>
+            <?php endif; ?>
         </div>
-    </div> <!-- container-fluid, tm-container-content -->
-   <?php require_once("includes/footer.php") ?> 
+    </div>
+</div> <!-- container-fluid, tm-container-content -->
+<?php require_once("includes/footer.php") ?>
