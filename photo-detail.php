@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
                     <?= $photo->description  ?>
                 </p>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-primary tm-btn-big">Download</a>
+                    <a href="/gallery/admin/<?= $photo->picture_path() ?>" download="" class="btn btn-primary tm-btn-big">Download</a>
                 </div>
                 <div class="mb-4 d-flex flex-wrap">
                     <div class="mr-4 mb-2">
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
                                 <textarea class="form-input" required name="body" placeholder="Your text"></textarea>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-primary pull-right" name="submit">
+                        <input type="submit" class="btn btn-primary pull-right" name="submit" value="Submit">
                     </div>
                 </form>
             </div>
