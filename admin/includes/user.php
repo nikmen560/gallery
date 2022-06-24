@@ -88,6 +88,7 @@ class User extends Db_object
         $this->id = $db->escape_string($user_id);
 
         $sql = "UPDATE " . self::$db_table . " SET image = '$this->image' WHERE id = $this->id";
-        return $db->query($sql) ? $this->image_path() : false;
+        $db->query($sql);  
+       return $this->image_path();
     }
 }
