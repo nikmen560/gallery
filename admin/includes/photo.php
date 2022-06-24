@@ -59,4 +59,10 @@ class Photo extends Db_object
     {
         return $this->upl_dir.DS.$this->filename;
     }
+    public static function ajax_get_photo_by_id($photo_id)
+    {
+        $photo = Photo::get_by_id($photo_id);
+        $output = "<img class='w-100' src='{$photo->picture_path()}' >";
+        echo $output;
+    }
 }

@@ -14,19 +14,25 @@ $photos = Photo::get_all();
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <?php foreach ($photos as $photo) : ?>
-                        <div class="col-sm mb-2">
-                            <div class="hover-zoom">
-                                <img class="img-fluid image_modal "  src="<?= $photo->picture_path(); ?>"  alt="" />
+                <div class="modal-wrapper">
+                    <div class="row">
+                        <?php foreach ($photos as $photo) : ?>
+                            <div class=" col-sm col-md mb-2">
+                                <div class="hover-zoom">
+                                    <img class="img-fluid image_modal " src="<?= $photo->picture_path(); ?>" data="<?= $photo->id ?>" alt="" />
+                                </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
+                    <div class="col-md-6" id="modal_sidebar">
+                        <img src="" alt="">
+
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                <button type="button" disabled="true" id="set_user_image" class="btn btn-primary ">Save changes</button>
+                <button type="button" disabled="true" id="set_user_image" data-mdb-dismiss="modal" class="btn btn-primary ">Save changes</button>
             </div>
         </div>
     </div>
