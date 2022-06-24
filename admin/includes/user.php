@@ -79,4 +79,15 @@ class User extends Db_object
         $path_to_image = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
         return file_exists($path_to_image) ? $get_image_path : $this->get_image_placeholder();
     }
+
+    public function ajax_save_user_image($user_image, $user_id)
+    {
+
+        global $db;
+        $this->image = $db->escape_string($user_image);
+        $this->id = $db->escape_string($user_id);
+
+        $sql = "UPDATE " . self::$db_table . " SET image = '$this->image' WHERE id = $this->id";
+        return $db->query($sql) ? $this->image_path() : false;
+    }
 }
