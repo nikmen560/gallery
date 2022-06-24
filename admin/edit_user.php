@@ -21,7 +21,9 @@
         $user->set_file($_FILES['user_avatar']);
         $user->save_with_image();
     }
-    redirect("admin/edit_user.php?id=$user->id");
+    $session->message("The user has been updated");
+    redirect("admin/users.php");
+    
 }
 ?>
 <div class="container">

@@ -13,6 +13,14 @@ class Session {
         $this->count_visitors();
         $this->check_message();
     }
+    public function message($msg="")
+    {
+        if(!empty($msg)) {
+            $_SESSION['message'] = $msg;
+        } else {
+            return $this->message;
+        }
+    }
 
     public function count_visitors()
     {
@@ -46,13 +54,6 @@ class Session {
         unset($_SESSION['id']);
         unset($this->id);
         $this->signed_in = false;
-    }
-    public function message($msg="") {
-        if(!empty($msg)){
-            $_SESSION['message'] = $msg;
-        } else {
-            return $this->message;
-        }
     }
     public function check_message() {
         if(isset($_SESSION['message'])){
