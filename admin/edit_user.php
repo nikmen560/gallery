@@ -1,4 +1,5 @@
 <?php include("includes/admin_navigation.php"); ?>
+<?php require_once("includes/photo_library_modal.php"); ?>
 <?php if (empty($_GET['id'])) {
     redirect("admin/users.php");
 } else {
@@ -23,6 +24,8 @@
     redirect("admin/edit_user.php?id=$user->id");
 }
 ?>
+<div class="container">
+
 
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-outline mb-4">
@@ -67,15 +70,15 @@
     </div>
 
     <?php if (isset($user)) : ?>
-
-        <div class="form-outline mb-4">
-            <img width="100%" class="rounded-5" src="<?= $user->image_path() ?>" alt="avatar">
+        <div class="form-outline mb-4 user_image_box">
+            <a href="#" data-mdb-toggle="modal" data-mdb-target="#photoModal"><img width="100%" class="rounded-5" src="<?= $user->image_path() ?>" alt="avatar"></a>
         </div>
     <?php endif; ?>
     <div class=" mb-4">
         <label class="form-label" for="file">Upload avatar</label>
         <input type="file" class="form-control " id="file" name="user_avatar" />
     </div>
+    <p id="user_id" class="d-none"><?= $user->id ?></p>
 
     <!-- Submit button -->
     <button type="submit" name="submit" class="btn btn-primary btn-block mb-4">Submit</button>
@@ -83,6 +86,7 @@
             Delete
         </a>
 </form>
+</div>
 
 
 
