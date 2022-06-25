@@ -36,4 +36,10 @@ $(document).ready(function () {
       },
     });
   });
+
+  // DELETE PHOTO FUNCTION
+
+  $(".delete_link").click(function () {
+    return confirm("are you shure?");
+  });
 });
