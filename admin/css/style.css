@@ -12,3 +12,16 @@ body {
 .fas.fa-share-alt:hover {
   color: #0d47a1 !important;
 }
+
+
+/* PHOTO Library Modal */
+
+.modal .modal-dialog {
+  max-width: 90%;
+}
+.selected {
+  outline: blue ;
+}
+.modal-wrapper {
+  max-width: 50%;
+}
