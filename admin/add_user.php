@@ -7,7 +7,9 @@
    $user->last_name = $_POST['last_name'] ;
    $user->email = $_POST['email'] ;
    $user->role = $_POST['role'] ;
-   $user->set_file($_FILES['user_avatar']);
+   if(isset($_FILES['user_avatar'])) {
+    $user->set_file($_FILES['user_avatar']);
+   }
    $user->save();
 }
 ?>
