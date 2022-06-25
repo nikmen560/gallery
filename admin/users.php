@@ -5,6 +5,9 @@ $users = User::get_all();
 
 <table class="table align-middle mb-0 bg-white">
   <thead class="bg-light">
+    <p class="bg-success">
+      <?php echo $session->message() ?>
+    </p>
     <tr>
       <th>Name</th>
       <th>Title</th>

@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     if ($new_comment && $new_comment->save()) {
         redirect("photo-detail.php?photo=$photo->id");
     } else {
-        $message = "THere was some problems with saving";
+        $session->message = "THere was some problems with saving";
     }
 }
 
