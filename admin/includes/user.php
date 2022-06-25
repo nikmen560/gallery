@@ -79,6 +79,15 @@ class User extends Db_object
         $path_to_image = SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
         return file_exists($path_to_image) ? $get_image_path : $this->get_image_placeholder();
     }
+    public function delete_photo()
+    {
+        if($this->delete()) {
+            $target_path =  SITE_ROOT . DS . 'admin' . DS . 'images' . DS . $this->upload_directory . DS . $this->image;
+            return unlink($target_path) ? true : false;
+        } else {
+            return false;
+        }
+    }
 
     public function ajax_save_user_image($user_image, $user_id)
     {
