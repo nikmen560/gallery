@@ -36,6 +36,7 @@
     </div>
 </footer>
 <script src="js/plugins.js"></script>
+<script src="js/scripts.js"></script>
 <script>
     $(window).on("load", function() {
         $('body').addClass('loaded');

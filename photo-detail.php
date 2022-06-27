@@ -4,18 +4,19 @@
 <?php $comments = Comment::get_all_comments($_GET['photo']) ?>
 
 <?php
-if (isset($_POST['submit'])) {
-    $author = trim($_POST['username']);
-    $body = trim($_POST['body']);
+// if (isset($_POST['submit'])) {
+//     $author = trim($_POST['username']);
+//     $body = trim($_POST['body']);
 
-    $new_comment = Comment::create_comment($photo->id, $author, $body);
+//     $new_comment = Comment::create_comment($photo->id, $author, $body);
 
-    if ($new_comment && $new_comment->save()) {
-        redirect("photo-detail.php?photo=$photo->id");
-    } else {
-        $session->message = "THere was some problems with saving";
-    }
-}
+//     if ($new_comment && $new_comment->save()) {
+//         redirect("photo-detail.php?photo=$photo->id");
+//     } else {
+//         $session->message = "THere were some problems with saving";
+//     }
+// }
+// TODO add comment ajax
 
 ?>
 
@@ -128,26 +129,27 @@ if (isset($_POST['submit'])) {
                         </p>
                     </div>
                 </div>
-                <form class="form-block" action="" method="POST">
+                <form class="form-block" id="add_comment_form" action="" >
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-user"></i></div>
-                                <input class="form-input" type="text" required name="username" placeholder="Your name">
+                                <input class="form-input" id="username" type="text" required name="username" placeholder="Your name">
+                            <input type="text" class="d-none" name="photo_id" value="<?= $photo->id ?>">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 fl_icon">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                <input class="form-input" type="text" required name="email" placeholder="Your email">
+                                <input class="form-input" type="text" id="email" required name="email" placeholder="Your email">
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <textarea class="form-input" required name="body" placeholder="Your text"></textarea>
+                                <textarea class="form-input" required id="body" name="body" placeholder="Your text"></textarea>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-primary pull-right" name="submit" value="Submit">
+                        <input type="submit" class="btn btn-primary pull-right" name="submit" id="submit_btn" value="Submit">
                     </div>
                 </form>
             </div>

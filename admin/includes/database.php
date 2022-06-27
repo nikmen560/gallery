@@ -3,14 +3,13 @@ require_once("new_config.php");
 
 class Database
 {
-
-
     public $conn;
+    public $db;
 
 
     function __construct()
     {
-        $this->open_db_connection();
+        $this->db = $this->open_db_connection();
     }
     public function open_db_connection()
     {
@@ -18,11 +17,12 @@ class Database
         if ($this->conn->connect_errno) {
             die("DATABASE failed " . $this->conn->error);
         }
+        return $this->conn;
     }
 
     public function query($sql)
     {
-        $result = $this->conn->query($sql);
+        $result = $this->db->query($sql);
         $this->confirm_query($result);
         return $result;
     }
@@ -30,16 +30,16 @@ class Database
     private function confirm_query($result)
     {
         if (!$result) {
-            die("query not confirmed" . $this->conn->error);
+            die("query not confirmed" . $this->db->error);
         }
     }
 
     public function escape_string($string)
     {
-        return $this->conn->real_escape_string($string);
+        return $this->db->real_escape_string($string);
     }
     public function insert_id() {
-        return $this->conn->insert_id;
+        return $this->db->insert_id;
 
     }
 }
