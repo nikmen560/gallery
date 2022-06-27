@@ -72,17 +72,18 @@
                     <div class="be-comment">
                         <div class="be-img-comment">
                             <a href="blog-detail-2.html">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                                <img src="<?= $comment->avatar ?>" alt="" class="be-ava-comment">
                             </a>
                         </div>
                         <div class="be-comment-content">
 
                             <span class="be-comment-name">
                                 <a href="blog-detail-2.html"><?= $comment->author ?></a>
+                                <small><?= $comment->email ?> </small>
                             </span>
                             <span class="be-comment-time">
                                 <i class="fa fa-clock-o"></i>
-                                May 27, 2015 at 3:14am
+                               <?= $comment->date ?> 
                             </span>
 
                             <p class="be-comment-text">
@@ -102,13 +103,13 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 fl_icon">
                             <div class="form-group fl_icon">
-                                <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                <input class="form-input" type="text" id="email" required name="email" placeholder="Your email">
+                                <div class="icon"><i class="fa fa-envelope"></i></div>
+                                <input class="form-input" type="text" id="email" required  name="email" placeholder="Your email">
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <textarea class="form-input" required id="body" name="body" placeholder="Your text"></textarea>
+                                <textarea class="form-input"  id="body" name="body" required placeholder="Your text"></textarea>
                             </div>
                         </div>
                         <input type="submit" class="btn btn-primary pull-right" name="submit" id="submit_btn" value="Submit">

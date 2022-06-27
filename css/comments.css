@@ -38,8 +38,13 @@
 }
 
 .be-comment-name {
-    font-size: 13px;
+    font-size: 15px;
     font-family: 'Conv_helveticaneuecyr-bold';
+}
+.be-comment-name small {
+    margin-left: 3px;
+    font-size: 10px;
+    color: #2626264d;
 }
 
 .be-comment-content a {
@@ -110,4 +115,8 @@
 
 .form-group textarea.form-input {
     height: 150px;
+}
+
+.has-error {
+    border-color: #ea3e3ee4 !important;
 }
