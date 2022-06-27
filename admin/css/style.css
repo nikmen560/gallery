@@ -25,3 +25,10 @@ body {
 .modal-wrapper {
   max-width: 50%;
 }
+
+
+.dropzone {
+  border: 6px dashed #0087F7 ;
+  border-radius: 5px ;
+  background: white ;
+}
