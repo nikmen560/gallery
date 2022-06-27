@@ -16,13 +16,13 @@ $(function () {
       dataType: 'json',
       encode:true,
       success: function(data) {
-        console.log(data);
+        let randomAva = Math.floor(Math.random() * (4 - 1) + 1);
 
   let comment = 
                 '<div class="be-comment">' +
                     '<div class="be-img-comment">' +
                         '<a href="blog-detail-2.html">' +
-                            '<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">' +
+                            `<img src="https://bootdey.com/img/Content/avatar/avatar${randomAva}.png" alt="" class="be-ava-comment">` +
                         '</a>' +
                     '</div>' +
                     '<div class="be-comment-content">' +
@@ -38,7 +38,11 @@ $(function () {
                         '</p>' +
                     '</div>' +
                 '</div>';
-        $(".be-comment").append(comment);
+        $(".be-comment")
+        .hide()
+        .fadeIn(1000)
+        .last()
+        .append(comment);
       }
     });
   });
