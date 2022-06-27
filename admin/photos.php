@@ -25,7 +25,7 @@ $photos = Photo::get_all();
                     <?= $photo->description ?>
                 </p>
                 <div class="d-flex justify-content-center">
-                    <a class="btn btn-link link-danger p-md-1 my-1" href="delete_photo.php?id=<?= $photo->id ?>" >Delete</a>
+                    <a class="btn btn-link link-danger p-md-1 my-1 delete_link"  href="delete_photo.php?id=<?= $photo->id ?>" >Delete</a>
                     <a class="btn btn-link link-primary p-md-1 my-1" href="edit_photo.php?id=<?= $photo->id ?>" >Edit</a>
                     <a class="btn btn-link link-secondary p-md-1 my-1" href="/gallery/photo-details.php?photo=<?= $photo->id ?>" >View</a>
                     <a class="btn btn-link link-info p-md-1 my-1" href="comments.php?photo=<?= $photo->id ?>" >Comments (<?= count($comments) ?>)</a>
