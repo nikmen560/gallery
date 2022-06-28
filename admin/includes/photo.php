@@ -3,7 +3,7 @@
 class Photo extends Db_object
 {
     protected static $db_table = "photos";
-    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size');
+    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size', 'tags');
     public $id;
     public $title;
     public $alt;
@@ -11,6 +11,7 @@ class Photo extends Db_object
     public $filename;
     public $type;
     public $size;
+    public $tags;
 
     public $tmp_path;
     public $upl_dir = "images";
@@ -57,12 +58,37 @@ class Photo extends Db_object
 
     public function picture_path()
     {
-        return $this->upl_dir.DS.$this->filename;
+        return IMAGES_PATH . DS . $this->filename;
     }
     public static function ajax_get_photo_by_id($photo_id)
     {
         $photo = Photo::get_by_id($photo_id);
         $output = "<img class='w-100' src='{$photo->picture_path()}' >";
         echo $output;
+    }
+    public function get_similar_photos()
+    {
+        $tags_arr = $this->get_tags();
+        $sql = "SELECT * FROM photos WHERE tags IN('{$tags_arr[0]}' ";
+        
+        for($i = 1; $i < count($tags_arr); $i++) {
+            if($i === count($tags_arr) - 1) {
+                $sql .= " , '{$tags_arr[$i]}') AND id NOT IN ({$this->id})";
+            } else {
+                $sql .= " , '{$tags_arr[$i]}'";
+            }
+        }
+        return static::find_by_query($sql);
+    }
+    
+    public function get_tags()
+    {
+        return explode(', ', $this->tags);
+    }
+    public function get_picture_dimensions()
+    {
+        list($width, $height) = getimagesize(SITE_ROOT . DS . 'admin' . DS . $this->upl_dir . DS. "$this->filename");
+        return ['width' => $width, 'height' => $height];
+        
     }
 }

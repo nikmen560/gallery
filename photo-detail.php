@@ -1,25 +1,14 @@
 <?php require_once("includes/navigation.php") ?>
 <?php require_once("includes/search.php") ?>
-<?php $photo = Photo::get_by_id($_GET['photo']) ?>
-<?php $comments = Comment::get_all_comments($_GET['photo']) ?>
+<?php 
 
-<?php
-// if (isset($_POST['submit'])) {
-//     $author = trim($_POST['username']);
-//     $body = trim($_POST['body']);
+$photo = Photo::get_by_id($_GET['photo']);
+$comments = Comment::get_all_comments($_GET['photo']);
+$related_photos = $photo->get_similar_photos();
+$tags = $photo->get_tags();
+$pic_dimensions_arr = $photo->get_picture_dimensions();
 
-//     $new_comment = Comment::create_comment($photo->id, $author, $body);
-
-//     if ($new_comment && $new_comment->save()) {
-//         redirect("photo-detail.php?photo=$photo->id");
-//     } else {
-//         $session->message = "THere were some problems with saving";
-//     }
-// }
-// TODO add comment ajax
-
-?>
-
+ ?>
 
 <div class="container-fluid tm-container-content tm-mt-60">
     <div class="row mb-4">
@@ -27,7 +16,7 @@
     </div>
     <div class="row tm-mb-90">
         <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-            <img src="/gallery/admin/<?= $photo->picture_path() ?>" alt="Image" class="img-fluid">
+            <img src="<?= $photo->picture_path() ?>" alt="Image" class="img-fluid">
         </div>
         <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
             <div class="tm-bg-gray tm-video-details">
@@ -35,14 +24,14 @@
                     <?= $photo->description  ?>
                 </p>
                 <div class="text-center mb-5">
-                    <a href="/gallery/admin/<?= $photo->picture_path() ?>" download="" class="btn btn-primary tm-btn-big">Download</a>
+                    <a href="<?= $photo->picture_path() ?>" download="" class="btn btn-primary tm-btn-big">Download</a>
                 </div>
                 <div class="mb-4 d-flex flex-wrap">
                     <div class="mr-4 mb-2">
-                        <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary">1920x1080</span>
+                        <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary"><?=  $pic_dimensions_arr['width'].'x'.$pic_dimensions_arr['height']; ?> </span>
                     </div>
                     <div class="mr-4 mb-2">
-                        <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary">JPG</span>
+                        <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary"><?= $photo->type; ?></span>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -51,13 +40,9 @@
                 </div>
                 <div>
                     <h3 class="tm-text-gray-dark mb-3">Tags</h3>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Cloud</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Bluesky</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Nature</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Background</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Timelapse</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Night</a>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Real Estate</a>
+                    <?php foreach($tags as $tag): ?>
+                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block"><?=$tag ?></a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -76,7 +61,6 @@
                             </a>
                         </div>
                         <div class="be-comment-content">
-
                             <span class="be-comment-name">
                                 <a href="blog-detail-2.html"><?= $comment->author ?></a>
                                 <small><?= $comment->email ?> </small>
@@ -85,7 +69,6 @@
                                 <i class="fa fa-clock-o"></i>
                                <?= $comment->date ?> 
                             </span>
-
                             <p class="be-comment-text">
                                 <?= $comment->body ?>
                             </p>
@@ -124,110 +107,25 @@
         </h2>
     </div>
     <div class="row mb-3 tm-gallery">
+
+        <?php foreach($related_photos as $related_photo): ?>
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
             <figure class="effect-ming tm-video-item">
-                <img src="img/img-01.jpg" alt="Image" class="img-fluid">
+                <img src="<?= $related_photo->picture_path() ?>" alt="<?= $related_photo->alt ?>" class="img-fluid">
                 <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Hangers</h2>
-                    <a href="#">View more</a>
+                    <h2><?= $related_photo->title ?></h2>
+                    <a href="/gallery/photo-detail.php?photo=<?= $related_photo->id ?>">View more</a>
                 </figcaption>
             </figure>
             <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">16 Oct 2020</span>
+                <span class="tm-text-gray-light">16 Oct 2020</span> 
+                <!-- TODO photo data -->
+                <!-- TODO photo views -->
                 <span>12,460 views</span>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-02.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Perfumes</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">12 Oct 2020</span>
-                <span>11,402 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-03.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Clocks</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">8 Oct 2020</span>
-                <span>9,906 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-04.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Plants</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">6 Oct 2020</span>
-                <span>16,100 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-05.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Morning</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">26 Sep 2020</span>
-                <span>16,008 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-06.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Pinky</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">22 Sep 2020</span>
-                <span>12,860 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-07.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>Bus</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">12 Sep 2020</span>
-                <span>10,900 views</span>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="img/img-08.jpg" alt="Image" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2>New York</h2>
-                    <a href="#">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">4 Sep 2020</span>
-                <span>11,300 views</span>
-            </div>
-        </div>
+        <?php endforeach; ?>
+
     </div> <!-- row -->
 </div> <!-- container-fluid, tm-container-content -->
 <?php require_once("includes/footer.php") ?>

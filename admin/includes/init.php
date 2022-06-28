@@ -1,7 +1,9 @@
 <?php 
 defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 defined('SITE_ROOT') ? null : define('SITE_ROOT', 'C:' . DS . 'MAMP' . DS . 'htdocs' . DS . 'gallery');
-defined('INCLUDES_PATH') ? null : define('INCLUDES_PATH', SITE_ROOT . DS . 'admin' . DS . 'includes');
+defined('ROOT') ? null : define('ROOT', DS . 'gallery');
+defined('INCLUDES_PATH') ? null : define('INCLUDES_PATH', ROOT . DS . 'admin' . DS . 'includes');
+defined('IMAGES_PATH') ? null : define('IMAGES_PATH', ROOT . DS . 'admin' . DS . 'images');
 
 require_once ("functions.php");
 require_once ("new_config.php");
