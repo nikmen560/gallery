@@ -11,13 +11,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link nav-link-1 active" aria-current="page" href="/gallery/index.php">Photos</a>
+                    <a class="nav-link nav-link-1" aria-current="page" href="/gallery/index.php">Photos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-3" href="about.php">About</a>
+                    <a class="nav-link nav-link-2" href="about.php">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-4" href="contact.php">Contact</a>
+                    <a class="nav-link nav-link-3" href="contact.php">Contact</a>
                 </li>
                 <?php if(isset($session->id)): ?>
                 <li class="nav-item">
@@ -28,3 +28,4 @@
             </div>
         </div>
     </nav>
+    <!-- TODO nav active link -->
