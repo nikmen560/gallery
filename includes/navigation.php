@@ -21,7 +21,7 @@
                 </li>
                 <?php if(isset($session->id)): ?>
                 <li class="nav-item">
-                    <a class="nav-link nav-link-4" href="/gallery/admin.php">Admin</a>
+                    <a class="nav-link nav-link-4" href="/gallery/admin/index.php">Admin</a>
                 </li>
                 <?php endif; ?>
             </ul>
