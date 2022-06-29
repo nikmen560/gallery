@@ -1,14 +1,12 @@
 <?php require_once("includes/navigation.php") ?>
 <?php require_once("includes/search.php") ?>
-<?php 
-
+<?php
 $photo = Photo::get_by_id($_GET['photo']);
 $comments = Comment::get_all_comments($_GET['photo']);
 $related_photos = $photo->get_similar_photos();
 $tags = $photo->get_tags();
 $pic_dimensions_arr = $photo->get_picture_dimensions();
-
- ?>
+?>
 
 <div class="container-fluid tm-container-content tm-mt-60">
     <div class="row mb-4">
@@ -28,7 +26,7 @@ $pic_dimensions_arr = $photo->get_picture_dimensions();
                 </div>
                 <div class="mb-4 d-flex flex-wrap">
                     <div class="mr-4 mb-2">
-                        <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary"><?=  $pic_dimensions_arr['width'].'x'.$pic_dimensions_arr['height']; ?> </span>
+                        <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary"><?= $pic_dimensions_arr['width'] . 'x' . $pic_dimensions_arr['height']; ?> </span>
                     </div>
                     <div class="mr-4 mb-2">
                         <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary"><?= $photo->type; ?></span>
@@ -40,8 +38,8 @@ $pic_dimensions_arr = $photo->get_picture_dimensions();
                 </div>
                 <div>
                     <h3 class="tm-text-gray-dark mb-3">Tags</h3>
-                    <?php foreach($tags as $tag): ?>
-                    <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block"><?=$tag ?></a>
+                    <?php foreach ($tags as $tag) : ?>
+                        <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block"><?= $tag ?></a>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -67,7 +65,7 @@ $pic_dimensions_arr = $photo->get_picture_dimensions();
                             </span>
                             <span class="be-comment-time">
                                 <i class="fa fa-clock-o"></i>
-                               <?= $comment->date ?> 
+                                <?= $comment->date ?>
                             </span>
                             <p class="be-comment-text">
                                 <?= $comment->body ?>
@@ -75,24 +73,24 @@ $pic_dimensions_arr = $photo->get_picture_dimensions();
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <form class="form-block" id="add_comment_form" action="" >
+                <form class="form-block" id="add_comment_form" action="">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-user"></i></div>
                                 <input class="form-input" id="username" type="text" required name="username" placeholder="Your name">
-                            <input type="text" class="d-none" name="photo_id" value="<?= $photo->id ?>">
+                                <input type="text" class="d-none" name="photo_id" value="<?= $photo->id ?>">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-6 fl_icon">
                             <div class="form-group fl_icon">
                                 <div class="icon"><i class="fa fa-envelope"></i></div>
-                                <input class="form-input" type="text" id="email" required  name="email" placeholder="Your email">
+                                <input class="form-input" type="text" id="email" required name="email" placeholder="Your email">
                             </div>
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <textarea class="form-input"  id="body" name="body" required placeholder="Your text"></textarea>
+                                <textarea class="form-input" id="body" name="body" required placeholder="Your text"></textarea>
                             </div>
                         </div>
                         <input type="submit" class="btn btn-primary pull-right" name="submit" id="submit_btn" value="Submit">
@@ -108,28 +106,26 @@ $pic_dimensions_arr = $photo->get_picture_dimensions();
     </div>
     <div class="row mb-3 tm-gallery">
 
-        <?php foreach($related_photos as $related_photo): ?>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-            <figure class="effect-ming tm-video-item">
-                <img src="<?= $related_photo->picture_path() ?>" alt="<?= $related_photo->alt ?>" class="img-fluid">
-                <figcaption class="d-flex align-items-center justify-content-center">
-                    <h2><?= $related_photo->title ?></h2>
-                    <a href="/gallery/photo-detail.php?photo=<?= $related_photo->id ?>">View more</a>
-                </figcaption>
-            </figure>
-            <div class="d-flex justify-content-between tm-text-gray">
-                <span class="tm-text-gray-light">16 Oct 2020</span> 
-                <!-- TODO photo data -->
-                <!-- TODO photo views -->
-                <span>12,460 views</span>
+        <?php foreach ($related_photos as $related_photo) : ?>
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item">
+                    <img src="<?= $related_photo->picture_path() ?>" alt="<?= $related_photo->alt ?>" class="img-fluid">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2><?= $related_photo->title ?></h2>
+                        <a href="/gallery/photo-detail.php?photo=<?= $related_photo->id ?>">View more</a>
+                    </figcaption>
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-light"><?= $related_photo->date ?> </span>
+                    <span><?= $related_photo->views ?> views</span>
+                </div>
             </div>
-        </div>
         <?php endforeach; ?>
 
     </div> <!-- row -->
 </div> <!-- container-fluid, tm-container-content -->
-<?php require_once("includes/footer.php") ?>
 
+<?php require_once("includes/footer.php") ?>
 </body>
 
 </html>
