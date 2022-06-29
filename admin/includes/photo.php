@@ -1,9 +1,10 @@
 <?php
+require_once("paginate.php");
 
 class Photo extends Db_object
 {
     protected static $db_table = "photos";
-    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size', 'tags');
+    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size', 'tags', 'date', 'views');
     public $id;
     public $title;
     public $alt;
@@ -12,6 +13,8 @@ class Photo extends Db_object
     public $type;
     public $size;
     public $tags;
+    public $date;
+    public $views;
 
     public $tmp_path;
     public $upl_dir = "images";
@@ -90,5 +93,10 @@ class Photo extends Db_object
         list($width, $height) = getimagesize(SITE_ROOT . DS . 'admin' . DS . $this->upl_dir . DS. "$this->filename");
         return ['width' => $width, 'height' => $height];
         
+    }
+    public static function get_paginated_photos($items_per_page, $paginate)
+    {
+        $sql = "SELECT * FROM photos LIMIT {$items_per_page} OFFSET {$paginate->offset()}";
+        return Photo::find_by_query($sql);
     }
 }
