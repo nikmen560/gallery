@@ -51,8 +51,8 @@ class Photo extends Db_object
 
     public function delete_photo()
     {
-        if($this->delete()) {
-            $target_path = SITE_ROOT.DS . 'admin' . DS . $this->picture_path();
+        if ($this->delete()) {
+            $target_path = SITE_ROOT . DS . 'admin' . DS . $this->picture_path();
             return unlink($target_path) ? true : false;
         } else {
             return false;
@@ -72,27 +72,28 @@ class Photo extends Db_object
     public function get_similar_photos()
     {
         $tags_arr = $this->get_tags();
-        $sql = "SELECT * FROM photos WHERE tags IN('{$tags_arr[0]}' ";
-        
-        for($i = 1; $i < count($tags_arr); $i++) {
-            if($i === count($tags_arr) - 1) {
-                $sql .= " , '{$tags_arr[$i]}') AND id NOT IN ({$this->id})";
+        $sql = "SELECT * FROM photos WHERE id <> {$this->id} AND (tags LIKE '%{$tags_arr[0]}%'";
+        if (count($tags_arr) === 1) {
+            $sql .= ")";
+        }
+        for ($i = 1; $i < count($tags_arr); $i++) {
+            if ($i === count($tags_arr) - 1) {
+                $sql .= " OR tags LIKE '%{$tags_arr[$i]}%')";
             } else {
-                $sql .= " , '{$tags_arr[$i]}'";
+                $sql .= " OR tags LIKE '%{$tags_arr[$i]}%' ";
             }
         }
         return static::find_by_query($sql);
     }
-    
+
     public function get_tags()
     {
         return explode(', ', $this->tags);
     }
     public function get_picture_dimensions()
     {
-        list($width, $height) = getimagesize(SITE_ROOT . DS . 'admin' . DS . $this->upl_dir . DS. "$this->filename");
+        list($width, $height) = getimagesize(SITE_ROOT . DS . 'admin' . DS . $this->upl_dir . DS . "$this->filename");
         return ['width' => $width, 'height' => $height];
-        
     }
     public static function get_paginated_photos($items_per_page, $paginate)
     {
