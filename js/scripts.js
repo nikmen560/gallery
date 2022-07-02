@@ -2,26 +2,21 @@ $(function () {
   // active link navbar
 
   const currentLocation = location.href;
-  console.log(currentLocation);
   const menuItem = $(".nav-link");
-  console.log(menuItem)
   const menuItemLength = menuItem.length;
-  console.log(menuItemLength)
   for(let i = 0; i< menuItemLength; i++) 
   {
     if(menuItem[i].href === currentLocation) {
       menuItem[i].classList.add("active");
-      console.log(menuItem[i]);
 
     }
   }
-
-
-
-
-
-
   //active link navbar end
+
+
+
+
+
   $("form").on("submit", function (event) {
     event.preventDefault();
     let avatarNum = Math.floor(Math.random() * (8 - 1) + 1);
