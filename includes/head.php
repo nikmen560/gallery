@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
     <link rel="stylesheet" href="css/comments.css">
+    <link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
