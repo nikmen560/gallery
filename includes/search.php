@@ -20,8 +20,8 @@
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                 </div>
-                <div class="modal-body">
-                    <h1>Search</h1>
+                <div class="modal-body ">
+                    <h1 class="text-center mb-2">Search</h1>
                     <form class="navbar-form " id="searchForm" autocomplete="off" action="" method="">
                         <div class="form-group">
                             <input type="text" id="searchModalInput" name="search" class="form-control" placeholder="Search">
@@ -29,9 +29,7 @@
                         <button type="submit" id="searchSubmit" class="btn d-none">Submit</button>
                     </form>
                 </div>
-
-
-
+                <!-- HERE GOES SEARCH RESULTS -->
             </div>
         </div>
     </div>

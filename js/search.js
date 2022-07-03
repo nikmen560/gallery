@@ -1,10 +1,8 @@
 $(function () {
   function showErrorMessage(message) {
     return `
-  <div class='row search-result'>
-    <div class='col-xs-6 col-sm-9 col-md-9 col-lg-10 title'>
+  <div class='row search-result text-center'>
       <h3>${message}</h3>
-    </div>
   </div>
   `;
   }
@@ -43,7 +41,7 @@ $(function () {
 
         if (data.result) {
           $(".search-result").remove();
-          $(".modal-body").append(data.result.join(""));
+          $(".modal-body").append(data.result);
         }
       },
       error: function (xhr, status, error) {
