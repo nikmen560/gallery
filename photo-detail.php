@@ -1,7 +1,9 @@
 <?php require_once("includes/navigation.php") ?>
 <?php require_once("includes/search.php") ?>
 <?php
+
 $photo = Photo::get_by_id($_GET['photo']);
+$photo->update_views();
 $comments = Comment::get_all_comments($_GET['photo']);
 
 $related_photos = $photo->get_similar_photos();

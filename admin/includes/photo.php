@@ -100,4 +100,15 @@ class Photo extends Db_object
         $sql = "SELECT * FROM photos LIMIT {$items_per_page} OFFSET {$paginate->offset()}";
         return Photo::find_by_query($sql);
     }
+
+    public function update_views()
+    {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        global $db;
+        $sql = "UPDATE photos SET views = views +1 WHERE id = {$_GET['photo']}";
+         $db->query($sql);
+    } else {
+        return false;
+    }
+}
 }
