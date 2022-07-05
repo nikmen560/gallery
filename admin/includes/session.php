@@ -38,8 +38,12 @@ class Session {
             $_SESSION['signed_in'] = true;
             $this->id = $_SESSION['id'] = $user->id;
             $this->signed_in = $_SESSION['signed_in'] = true;
+            return true;
 
+        } else {
+            return false;
         }
+        
     }
     private function check_sign_in() {
         if(isset($_SESSION['id'])) {
