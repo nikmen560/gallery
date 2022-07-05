@@ -1,4 +1,5 @@
 <?php require_once("head.php") ?>
+<?php require_once("login.php") ?>
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="/gallery/index.php">
@@ -25,7 +26,7 @@
                     </li>
                 <?php else : ?>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-5" href="/gallery/login.php">Login</a>
+                        <a class="nav-link nav-link-5" id="loginNavButton" href="/gallery/login.php">Login</a>
                     </li>
                 <?php endif; ?>
             </ul>

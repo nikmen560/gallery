@@ -22,7 +22,6 @@ class User extends Db_object
         $password = $db->escape_string($password);
         $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password' LIMIT 1";
         $result_arr = self::find_by_query($sql);
-        var_dump($result_arr);
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
     public function set_file($file)
