@@ -22,10 +22,10 @@
                 </li>
                 <?php if (isset($session->id)) : ?>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-4" href="/gallery/admin/index.php">Admin</a>
+                        <a class="nav-link nav-link-4" id="adminNavButton" href="/gallery/admin/index.php">Admin</a>
                     </li>
                 <?php else : ?>
-                    <li class="nav-item">
+                    <li class="nav-item" id="loginLinkPlaceholder">
                         <a class="nav-link nav-link-5" id="loginNavButton" href="/gallery/login.php">Login</a>
                     </li>
                 <?php endif; ?>

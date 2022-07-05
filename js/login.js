@@ -1,4 +1,13 @@
 $(function() {
+  function showMessage(type,message, additionalMsg = '') {
+    return `
+    <div class='alert alert-${type}'>
+      <h4>${message}</h4>
+      <p>${additionalMsg}</p>
+    </div>
+    `;
+  }
+  
 $("#loginNavButton").click(function (e) { 
     e.preventDefault();
     $("#loginModal").modal();
@@ -25,12 +34,28 @@ $("#loginNavButton").click(function (e) {
       dataType: "json",
       success: function (data) {
         console.log(data);
-        if (data.error) {
+
+        if (!data.success) {
+          
+          $('.alert').remove();
+          $("#message").append(showMessage('danger', data.message, ''));
+
 
         }
 
-        if (data.result) {
+        if (data.success) {
+          const message = `Welcome back ${data.user.username}`;
+          const additionalMsg = 'This window will be automatically closed';
+          const adminNavLink = '<a class="nav-link nav-link-4" id="adminNavButton" href="/gallery/admin/index.php">Admin</a>';
+          $(".modal_content").remove();
+          $(".alert").remove();
+          $(".modal-body").append(showMessage('success',message, additionalMsg));
 
+          setTimeout(() => {
+            $("#closeModal").click();
+            $("#loginNavButton").remove();
+            $("#loginLinkPlaceholder").append(adminNavLink);
+          }, 1500);
 
         }
       },

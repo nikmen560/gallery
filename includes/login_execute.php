@@ -1,7 +1,7 @@
 <?php
 require_once("../admin/includes/init.php");
 
-if (isset($_POST['loginSubmit'])) {
+if (isset($_POST['username'])) {
     $data = [];
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
@@ -10,7 +10,7 @@ if (isset($_POST['loginSubmit'])) {
     if ($user_found) {
         $data['success'] = true;
         $data['user'] = $user_found;
-        // $session->login($user_found);
+        $data['logged'] = $session->login($user_found);
     } else {
         $data['message'] = "Password or username are incorrect";
         $data['success'] = false;
