@@ -38,6 +38,7 @@
 <script src="js/plugins.js"></script>
 <script src="js/scripts.js"></script>
 <script src="js/search.js"></script>
+<script src="js/login.js"></script>
 <script>
     $(window).on("load", function() {
         $('body').addClass('loaded');
