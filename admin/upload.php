@@ -17,10 +17,13 @@
         }
         
         ?>
-
-        <div class="row">
-
-        <div class="col-md-6">
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Upload</h4>
+      </div>
+      <div class="card-body">
 
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -33,7 +36,7 @@
                 <input type="file" name="file">
             </div>
             <div class="form-group">
-                <input type="submit" name="submit" class="btn btn-primary">
+                <input type="submit" name="submit" class="btn btn-primary" value="Submit">
             </div>
         </form>
         </div>
@@ -46,6 +49,9 @@
                 </form>
             </div>
         </div>
+  </div>
+</div>
+
 
 
 

@@ -1,3 +1,4 @@
+<?php require_once("includes/sidebar.php") ?>
 <?php if(isset($session->id)): ?> 
 <?php $admin = User::get_by_id($session->id); ?>
 <?php  endif; ?>
@@ -13,7 +14,7 @@
 						<span class="navbar-toggler-bar bar3"></span>
 					</button>
 				</div>
-				<a class="navbar-brand" href="javascript:;">Paper Dashboard 2</a>
+				<a class="navbar-brand" href="javascript:;">Gallerika Dashboard</a>
 			</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-bar navbar-kebab"></span>
@@ -66,3 +67,5 @@
 		</div>
 	</nav>
 	<!-- End Navbar -->
+  
+<div class="content">

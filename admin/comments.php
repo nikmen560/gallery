@@ -20,10 +20,10 @@ if(isset($_GET['photo'])) $comments = Comment::get_all_comments($_GET['photo']);
       <td>
         <div class="d-flex align-items-center">
           <img
-              src="/gallery/img/img-01.jpg<?= "" ?>" 
+              src="<?= $comment->avatar ?>" 
               alt=""
               style="width: 45px; height: 45px"
-              class="rounded-circle"
+              class="rounded-circle mr-3"
               />
           <div class="ms-3">
             <p class="fw-bold mb-1"><?= $comment->author?></p>
