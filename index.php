@@ -3,7 +3,7 @@
 
 <?php
 $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
-$items_per_page = 3;
+$items_per_page = 8;
 $items_total = Photo::count_all();
 $paginate = new Paginate($page, $items_per_page, $items_total);
 $photos = Photo::get_paginated_photos($items_per_page, $paginate);
