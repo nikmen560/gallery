@@ -7,6 +7,9 @@ $items_per_page = 8;
 $items_total = Photo::count_all();
 $paginate = new Paginate($page, $items_per_page, $items_total);
 $photos = Photo::get_paginated_photos($items_per_page, $paginate);
+$visit = new Visit();
+$visit->add_visit();
+
 ?>
 
 <div class="container-fluid tm-container-content tm-mt-60">
