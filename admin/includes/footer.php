@@ -12,6 +12,7 @@
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
 <script src="assets/demo/demo.js"></script>
 <script>
 	$(document).ready(function() {
@@ -26,34 +27,6 @@
   <script src="/gallery/admin/js/script.js"></script>
   <script src="/gallery/admin/assets/js/script.js"></script>
 
-  <script>
-    google.charts.load('current', {
-      'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-      var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['Views', <?= $session->count ?>],
-        ['Photos', <?= Photo::count_all() ?>],
-        ['Comments', <?= Comment::count_all() ?>],
-        ['Users', <?= User::count_all() ?>],
-      ]);
-
-      var options = {
-        legend: 'none',
-        pieSliceText: 'label',
-        backgroundColor: 'transparent',
-        title: ''
-      };
-
-      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-      chart.draw(data, options);
-    }
-  </script>
   </body>
 
   </html>
