@@ -14,5 +14,9 @@ class Total_visits extends Db_object
         $result_arr = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE date = '$this->date' LIMIT 1");
         return !empty($result_arr) ? array_shift($result_arr) : false;
     }
+    public static function get_all()
+    {
+        return static::find_by_query("SELECT * FROM " . static::$db_table . " ORDER BY date");
+    }
 
 }
