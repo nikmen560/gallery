@@ -114,7 +114,6 @@ class Db_object
 
         global $db;
         $properties = $this->clean_properties();
-        var_dump($properties);
         $properties_pairs = array();
         foreach ($properties as $key => $value) {
             $properties_pairs[] = "{$key}='{$value}'";

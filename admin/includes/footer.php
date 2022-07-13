@@ -13,13 +13,7 @@
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
-<script src="assets/demo/demo.js"></script>
-<script>
-	$(document).ready(function() {
-		// Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-		demo.initChartsPages();
-	});
-</script>
+<script src="assets/demo/demo.js"></script> 
 
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>

@@ -1,4 +1,9 @@
 <?php require_once("includes/admin_navigation.php") ?>
+<?php 
+Visit::get_all();
+
+
+?>
 	<div class="row">
 		<div class="col-lg-3 col-md-6 col-sm-6">
 			<div class="card card-stats">
@@ -197,4 +202,5 @@
 </footer>
 </div>
 </div>
+
 <?php require_once("includes/footer.php") ?>
