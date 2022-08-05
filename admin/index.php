@@ -1,7 +1,11 @@
 <?php require_once("includes/admin_navigation.php") ?>
 <?php 
-Visit::get_all();
-
+$total_visits = Visit::get_all();
+$comments = Comment::get_all();
+$total_views = 0;
+foreach($total_visits as $total_visit) {
+	$total_views += $total_visit->total_views;
+}
 
 ?>
 	<div class="row">
@@ -16,8 +20,8 @@ Visit::get_all();
 						</div>
 						<div class="col-7 col-md-8">
 							<div class="numbers">
-								<p class="card-category">Capacity</p>
-								<p class="card-title">150GB
+								<p class="card-category">Guests</p>
+								<p class="card-title"> <?= $total_views; ?>
 								<p>
 							</div>
 						</div>
@@ -38,13 +42,13 @@ Visit::get_all();
 					<div class="row">
 						<div class="col-5 col-md-4">
 							<div class="icon-big text-center icon-warning">
-								<i class="nc-icon nc-money-coins text-success"></i>
+								<i class="nc-icon nc-tag-content text-success"></i>
 							</div>
 						</div>
 						<div class="col-7 col-md-8">
 							<div class="numbers">
-								<p class="card-category">Revenue</p>
-								<p class="card-title">$ 1,345
+								<p class="card-category">Comments</p>
+								<p class="card-title"> <?= count($comments) ?>
 								<p>
 							</div>
 						</div>
@@ -65,13 +69,13 @@ Visit::get_all();
 					<div class="row">
 						<div class="col-5 col-md-4">
 							<div class="icon-big text-center icon-warning">
-								<i class="nc-icon nc-vector text-danger"></i>
+								<i class="nc-icon nc-single-02 text-danger"></i>
 							</div>
 						</div>
 						<div class="col-7 col-md-8">
 							<div class="numbers">
-								<p class="card-category">Errors</p>
-								<p class="card-title">23
+								<p class="card-category">Users</p>
+								<p class="card-title"><?= count(User::get_all()) ?>
 								<p>
 							</div>
 						</div>
@@ -92,13 +96,13 @@ Visit::get_all();
 					<div class="row">
 						<div class="col-5 col-md-4">
 							<div class="icon-big text-center icon-warning">
-								<i class="nc-icon nc-favourite-28 text-primary"></i>
+								<i class="nc-icon nc-album-2 text-primary"></i>
 							</div>
 						</div>
 						<div class="col-7 col-md-8">
 							<div class="numbers">
-								<p class="card-category">Followers</p>
-								<p class="card-title">+45K
+								<p class="card-category">Wallpapers</p>
+								<p class="card-title"><?= count(Photo::get_all()) ?>
 								<p>
 							</div>
 						</div>
@@ -160,20 +164,19 @@ Visit::get_all();
 		<div class="col-md-8">
 			<div class="card card-chart">
 				<div class="card-header">
-					<h5 class="card-title">NASDAQ: AAPL</h5>
-					<p class="card-category">Line Chart with Points</p>
+					<h5 class="card-title">Website Guests</h5>
+					<p class="card-category">Unique</p>
 				</div>
 				<div class="card-body">
 					<canvas id="speedChart" width="400" height="100"></canvas>
 				</div>
 				<div class="card-footer">
 					<div class="chart-legend">
-						<i class="fa fa-circle text-info"></i> Tesla Model S
-						<i class="fa fa-circle text-warning"></i> BMW 5 Series
+						<i class="fa fa-circle text-warning"></i> Total 
 					</div>
 					<hr />
 					<div class="card-stats">
-						<i class="fa fa-check"></i> Data information certified
+						<i class="fa fa-check"></i> Data information sertified
 					</div>
 				</div>
 			</div>

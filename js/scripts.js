@@ -11,8 +11,12 @@ $(function () {
 
     }
   }
+
   //active link navbar end
 
+  $("#downloadLink").click(function (e) {  //download Counter
+    $("#downloadForm").submit();
+  });
 
 
 

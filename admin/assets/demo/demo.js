@@ -287,8 +287,6 @@ $(function () {
       var speedCanvas = document.getElementById("speedChart");
 
       var dataFirst = {
-        // TODO Total count of visits for a day
-        // data: [0, 19, 15, 20, 30, 40, 40, 50, 25, 30, 50, 70],
         data : visits.totals,
         fill: false,
         borderColor: "#fbc658",
@@ -301,8 +299,7 @@ $(function () {
       console.log(dataFirst);
 
       var speedData = {
-        // labels: [visits.dates],
-        labels: ["jun", "jul", "aug", "sep"],
+        labels: visits.dates,
         datasets: [dataFirst],
       };
       console.log(speedData);
