@@ -4,7 +4,7 @@ require_once("paginate.php");
 class Photo extends Db_object
 {
     protected static $db_table = "photos";
-    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size', 'tags', 'date', 'views');
+    protected static $db_table_fields = array('title', 'description', 'filename', 'type', 'size', 'tags', 'date', 'views', 'download_count');
     public $id;
     public $title;
     public $alt;
@@ -15,6 +15,8 @@ class Photo extends Db_object
     public $tags;
     public $date;
     public $views;
+    public $download_count;
+
 
     public $tmp_path;
     public $upl_dir = "images";
@@ -103,12 +105,12 @@ class Photo extends Db_object
 
     public function update_views()
     {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        global $db;
-        $sql = "UPDATE photos SET views = views +1 WHERE id = {$_GET['photo']}";
-         $db->query($sql);
-    } else {
-        return false;
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            global $db;
+            $sql = "UPDATE photos SET views = views +1 WHERE id = {$_GET['photo']}";
+            $db->query($sql);
+        } else {
+            return false;
+        }
     }
-}
 }
