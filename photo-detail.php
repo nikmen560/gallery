@@ -25,8 +25,11 @@ $visit->add_visit();
                 <p class="mb-4">
                     <?= $photo->description  ?>
                 </p>
+
                 <div class="text-center mb-5">
-                    <a href="<?= $photo->picture_path() ?>" download="" class="btn btn-primary tm-btn-big">Download</a>
+                    <form action="" id="downloadForm" method="post">
+                        <a id="downloadLink" name="downloadLink" href="<?= $photo->picture_path() ?>" download="" class="btn btn-primary tm-btn-big">Download</a>
+                    </form>
                 </div>
                 <div class="mb-4 d-flex flex-wrap">
                     <div class="mr-4 mb-2">
